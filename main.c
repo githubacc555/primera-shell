@@ -22,6 +22,16 @@ struct Favorito favoritos[MAX_FAVORITOS];
 int num_favs = 0;
 char favs_ruta[PATH_MAX] = "";
 int aviso = 0;
+//funcion que permite guardar un archivo de configuracion que facilita el acceso al archivo donde se encuentra la lista de favoritos
+void guardar_configuracion(){
+    FILE *archivo_config = fopen(ARCHIVO_CONFIG, "w");
+    if(archivo_config != NULL){
+        fprintf(archivo_config, "%s\n", favs_ruta);
+        fclose(archivo_config);
+    }else{
+        perror("Error al guardar el archivo de configuracion de comandos favoritos");
+    }
+}
 //funcion que permite crear la lista de favoritos
 void favs_crear(char *ruta){
     if (strlen(favs_ruta) > 0){
@@ -82,16 +92,6 @@ void cargar_configuracion(){
         fclose(archivo_config);
     }else{
         printf("No se encuentra el archivo de configuracion de comandos favoritos. Use favs crear 'ruta' para crearlo\n");
-    }
-}
-//funcion que permite guardar un archivo de configuracion que facilita el acceso al archivo donde se encuentra la lista de favoritos
-void guardar_configuracion(){
-    FILE *archivo_config = fopen(ARCHIVO_CONFIG, "w");
-    if(archivo_config != NULL){
-        fprintf(archivo_config, "%s\n", favs_ruta);
-        fclose(archivo_config);
-    }else{
-        perror("Error al guardar el archivo de configuracion de comandos favoritos");
     }
 }
 //funcion que permite agregar un comando a favoritos cuando este sea utilizado
